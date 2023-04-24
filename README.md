@@ -1,5 +1,4 @@
 # LinkSnipper
-<<<<<<< HEAD
 
 This project provides a Python script that takes a list of URLs from a file and uses a URL shortener API to generate shortened URLs for each of them. It then writes the shortened URLs to a file, prints them to the console, and generates QR codes for each shortened URL.
 
@@ -38,6 +37,3 @@ If you find any issues or have suggestions for improvement, please feel free to 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more information.
-=======
-This project provides a Python script that takes a list of URLs from a file and uses a URL shortener API to generate shortened URLs for each of them. It then writes the shortened URLs to a file, prints them to the console, and generates QR codes for each shortened URL.
->>>>>>> main
