@@ -18,7 +18,15 @@ To use this project, you need to have the following installed on your machine:
 
 1. Clone this repository or download the script.
 
-2. Install the required packages by running pip install -r requirements.txt in your terminal or command prompt.
+2. Install the required packages by running 
+```python
+python3 ./setup.py
+```
+or
+```python
+python ./setup.py
+```
+ in your terminal or command prompt.
 
 ## Usage
 
