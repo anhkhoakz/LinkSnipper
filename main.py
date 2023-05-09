@@ -2,7 +2,6 @@ import qrcode
 import requests
 from concurrent.futures import ThreadPoolExecutor
 import pathlib
-import multiprocessing
 
 # Cache for frequently accessed URLs
 url_cache = {}
@@ -63,11 +62,9 @@ def save_qr_code(qr, filename, foldername):
 
 
 def generate_qr_codes(shortened_urls, foldername="QR_codes"):
-    pool = multiprocessing.Pool()
-    args = [(url, i+1, foldername) for i, url in enumerate(shortened_urls)]
-    pool.starmap(generate_qr_code, args)
-    pool.close()
-    pool.join()
+    with ThreadPoolExecutor(max_workers=50) as executor:
+        for i, url in enumerate(shortened_urls):
+            executor.submit(generate_qr_code, url, i+1, foldername)
 
 
 def process_url(url):
