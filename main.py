@@ -1,8 +1,8 @@
-from concurrent.futures import ThreadPoolExecutor
-import multiprocessing
 import qrcode
-import pathlib
 import requests
+from concurrent.futures import ThreadPoolExecutor
+import pathlib
+import multiprocessing
 
 # Cache for frequently accessed URLs
 url_cache = {}
@@ -42,12 +42,10 @@ def print_shortened_urls(shortened_urls):
 
 def read_text_file(filename):
     with open(filename, "r") as f:
-        content = f.read()
-    return content
+        return f.read()
 
 
-def generate_qr_code(args):
-    content, index, foldername = args
+def generate_qr_code(content, index, foldername):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(content)
     qr.make(fit=True)
@@ -64,11 +62,10 @@ def save_qr_code(qr, filename, foldername):
     print(f"{filepath} generated successfully!")
 
 
-def generate_qr_codes(content, foldername="QR_codes"):
+def generate_qr_codes(shortened_urls, foldername="QR_codes"):
     pool = multiprocessing.Pool()
-    args = [(line, i+1, foldername)
-            for i, line in enumerate(content.splitlines())]
-    pool.imap(generate_qr_code, args)
+    args = [(url, i+1, foldername) for i, url in enumerate(shortened_urls)]
+    pool.starmap(generate_qr_code, args)
     pool.close()
     pool.join()
 
@@ -81,16 +78,21 @@ def process_url(url):
 
 def main():
     input_file_path = "input.txt"
-    shortened_output_file_path = "shorted_urls.txt"
-    shortened_urls = []
+    shortened_output_file_path = "shortened_urls.txt"
     urls = read_urls_from_file(input_file_path)
+
+    # Shorten URLs
     with ThreadPoolExecutor(max_workers=50) as executor:
         shortened_urls = list(executor.map(process_url, urls))
     shortened_urls = [url for url in shortened_urls if url is not None]
+
+    # Write shortened URLs to file
     write_shortened_urls_to_file(shortened_urls, shortened_output_file_path)
     print(f"Shortened URLs written to {shortened_output_file_path}")
     print_shortened_urls(shortened_urls)
-    generate_qr_codes("\n".join(shortened_urls))
+
+    # Generate QR codes
+    generate_qr_codes(shortened_urls)
 
 
 if __name__ == "__main__":
