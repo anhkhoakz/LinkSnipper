@@ -1,6 +1,7 @@
-import qrcode
-import requests
-import pathlib
+from qrcode import QRCode
+from requests import get
+from requests import RequestException
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
 # Cache for frequently accessed URLs
@@ -12,12 +13,12 @@ def shorten_url(url):
         return url_cache[url]
 
     try:
-        response = requests.get("http://is.gd/create.php", params={"format": "simple", "url": url})
+        response = get("http://is.gd/create.php", params={"format": "simple", "url": url})
         if response.status_code == 200:
             short_url = response.text
             url_cache[url] = short_url
             return short_url
-    except requests.exceptions.RequestException:
+    except RequestException:
         pass
 
     return None
@@ -34,11 +35,11 @@ def write_file(lines, file_path):
 
 
 def generate_qr_code(content, index, foldername):
-    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr = QRCode(version=1, box_size=10, border=5)
     qr.add_data(content)
     qr.make(fit=True)
     filename = f"QR_{index}.png"
-    path = pathlib.Path(foldername)
+    path = Path(foldername)
     path.mkdir(parents=True, exist_ok=True)
     filepath = path.joinpath(filename)
     img = qr.make_image(fill_color="black", back_color="white")
