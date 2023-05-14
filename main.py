@@ -13,7 +13,9 @@ def shorten_url(url):
         return url_cache[url]
 
     try:
-        response = get("http://is.gd/create.php", params={"format": "simple", "url": url})
+        response = get(
+            "http://is.gd/create.php", params={"format": "simple", "url": url}
+        )
         if response.status_code == 200:
             short_url = response.text
             url_cache[url] = short_url
@@ -73,7 +75,7 @@ def main():
     # Generate QR codes
     with ThreadPoolExecutor(max_workers=50) as executor:
         for i, url in enumerate(shortened_urls):
-            executor.submit(generate_qr_code, url, i+1, qr_foldername)
+            executor.submit(generate_qr_code, url, i + 1, qr_foldername)
 
 
 if __name__ == "__main__":
