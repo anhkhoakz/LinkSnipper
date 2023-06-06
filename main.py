@@ -3,6 +3,7 @@ from requests import get
 from requests import RequestException
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+from re import compile
 
 # Cache for frequently accessed URLs
 url_cache = {}
@@ -50,6 +51,13 @@ def generate_qr_code(content, index, foldername):
 
 
 def process_url(url):
+    url_pattern = compile(
+        r"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+    )
+    if not url_pattern.match(url):
+        print(f"Invalid URL: {url}")
+        return None
+
     short_url = shorten_url(url)
     if short_url:
         return short_url
