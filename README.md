@@ -22,10 +22,6 @@ To use this project, you need to have the following installed on your machine:
 ```python
 python3 ./setup.py
 ```
-or
-```python
-python ./setup.py
-```
  in your terminal or command prompt.
 
 ## Usage
