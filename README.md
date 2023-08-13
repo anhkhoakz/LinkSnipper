@@ -1,53 +1,64 @@
-# LinkSnipper
+# LinkSnipper: URL Shortener and QR Code Generator
 
-This project provides a Python script that takes a list of URLs from a file and uses a URL shortener API to generate shortened URLs for each of them. It then writes the shortened URLs to a file, prints them to the console, and generates QR codes for each shortened URL.
+LinkSnipper is a Python script designed to simplify the process of generating shortened URLs using a URL shortener API and creating QR codes for those URLs. This tool streamlines the task of managing and sharing links, making it ideal for various applications.
+
+## Features
+
+- Converts a list of URLs from a file into shortened URLs using a URL shortener API.
+- Saves the shortened URLs to a file and displays them in the console.
+- Generates QR codes for each shortened URL, stored in a separate folder.
 
 ## Requirements
 
-To use this project, you need to have the following installed on your machine:
+Ensure your system meets the following prerequisites:
 
 - Python 3.5 or higher
-
-- requests
-
-- qrcode
-
-- Pillow
+- The `requests` library
+- The `qrcode` library
+- The `Pillow` library
 
 ## Installation
 
-1. Clone this repository or download the script.
+1. Clone this repository or download the script to your local machine.
 
-2. Install the required packages by running 
-```python
+2. Install the required packages by running the following command in your terminal or command prompt:
+
+```sh
 python3 ./setup.py
 ```
- in your terminal or command prompt.
 
 ## Usage
 
-1. Create a file called input.txt and enter each URL that you want to shorten on a new line.
-```python
+1. Create a file named `input.txt` and list the URLs you wish to shorten, each on a new line.
+
+```sh
 touch input.txt
 ```
 
-2. Run the script by executing python main.py in your terminal or command prompt.
-```python
+2. Execute the script by running the following command in your terminal or command prompt:
+
+```sh
 python3 ./main.py
 ```
-or
-```python
+
+Alternatively:
+
+```sh
 python ./main.py
 ```
 
-3. The script will generate a file called shorted_urls.txt with the shortened URLs and print them to the console.
+3. The script will process the URLs, generate shortened versions, and save them to a file named `shorted_urls.txt`. The shortened URLs will also be displayed in the console.
 
-4. The script will also generate a folder called QR_codes with a QR code for each shortened URL.
+4. QR codes for each shortened URL will be generated and stored in a folder named `QR_codes`.
 
 ## Contributing
 
-If you find any issues or have suggestions for improvement, please feel free to open an issue or pull request in the GitHub repository.
+We welcome your contributions! If you encounter issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/anhkhoakz/linksnipper).
+
+## Code of Conduct
+
+To ensure a welcoming and respectful environment, we follow a [Code of Conduct](./CODE_OF_CONDUCT.md) for all interactions within the LinkSnipper community.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more information.
+This project is licensed under the terms of the [MIT License](./LICENSE). For more details, refer to the [LICENSE](./LICENSE) file.
