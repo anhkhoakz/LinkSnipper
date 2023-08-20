@@ -53,7 +53,7 @@ python ./main.py
 
 ## Contributing
 
-We welcome your contributions! If you encounter issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/anhkhoakz/linksnipper).
+We welcome your contributions! If you encounter issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/anhkhoakz/linksnipper). Please follow [Contributing direction](./CONTRIBUTING.md)
 
 ## Code of Conduct
 
