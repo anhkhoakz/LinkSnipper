@@ -38,12 +38,6 @@ touch input.txt
 2. Execute the script by running the following command in your terminal or command prompt:
 
 ```sh
-python3 ./main.py
-```
-
-Alternatively:
-
-```sh
 python ./main.py
 ```
 
