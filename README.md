@@ -59,4 +59,5 @@ This project is licensed under the terms of the [MIT License](./LICENSE). For mo
 
 # Sponsors
 [![1Password](/imgs/1Password.svg)](https://1password.com/)
-[![Tuta](/imgs/tuta_x_white.svg)](https://tuta.com/)
+
+[![Tuta](/imgs/tuta.svg)](https://tuta.com/)
