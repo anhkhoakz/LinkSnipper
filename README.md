@@ -61,3 +61,5 @@ This project is licensed under the terms of the [MIT License](./LICENSE). For mo
 [![1Password](/imgs/1Password.svg)](https://1password.com/)
 
 [![Tuta](/imgs/tuta.svg)](https://tuta.com/)
+
+[![Netlify](/imgs/netlify.png)](https://www.netlify.com/)
