@@ -62,4 +62,3 @@ This project is licensed under the terms of the [MIT License](./LICENSE). For mo
 
 [![Tuta](/imgs/tuta.svg)](https://tuta.com/)
 
-[![Netlify](/imgs/netlify.svg)](https://www.netlify.com/)
