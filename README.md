@@ -58,9 +58,9 @@ To ensure a welcoming and respectful environment, we follow a [Code of Conduct](
 This project is licensed under the terms of the [MIT License](./LICENSE). For more details, refer to the [LICENSE](./LICENSE) file.
 
 ## Sponsors
-[![1Password](/imgs/1Password.svg)](https://1password.com/)
+[![1Password](imgs/1Password.svg)](https://1password.com/)
 
-[![Tuta](/imgs/tuta.svg)](https://tuta.com/)
+[![Tuta](imgs/tuta.svg)](https://tuta.com/)
 
-[![Netlify](/imgs/netlify.svg)](https://www.netlify.com/)
+[![Netlify](imgs/netlify.svg)](https://www.netlify.com/)
 
