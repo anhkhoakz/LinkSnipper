@@ -24,7 +24,8 @@ Ensure your system meets the following prerequisites:
 2. Install the required packages by running the following command in your terminal or command prompt:
 
 ```sh
-python3 ./setup.py
+chmod +x ./setup.sh
+./setup.sh
 ```
 
 ## Usage
