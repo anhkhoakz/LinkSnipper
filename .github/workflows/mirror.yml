@@ -24,7 +24,7 @@ jobs:
         with:
           export-env: false
         env:
-          codeberg_ssh: "op://Security/Codeberg/private key"?ssh-format=openssh
+          codeberg_ssh: "op://Security/Codeberg/private key?ssh-format=openssh"
 
       - name: Mirroring to Codeberg
         uses: pixta-dev/repository-mirroring-action@v1
