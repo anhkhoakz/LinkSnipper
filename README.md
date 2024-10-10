@@ -56,7 +56,7 @@ To ensure a welcoming and respectful environment, we follow a [Code of Conduct](
 
 ## License
 
-This project is licensed under the terms of the [MIT License](./LICENSE). For more details, refer to the [LICENSE](./LICENSE) file.
+This project is licensed under the terms of the [GNU GPLv3](<[./LICENSE](https://choosealicense.com/licenses/gpl-3.0/)>). For more details, refer to the [LICENSE](./LICENSE.md) file.
 
 ## Sponsors
 
