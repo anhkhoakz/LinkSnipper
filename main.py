@@ -22,12 +22,10 @@ def shorten_url(url):
             url_cache[url] = short_url
             return short_url
     except RequestException:
-        pass
-
-    return None
+        return f"Failed to shorten URL: {url}"
 
 
-def read_file(file_path):
+def read_file(file_path: str) -> list:
     with open(file_path, "r") as f:
         return [line.strip() for line in f]
 
@@ -52,7 +50,7 @@ def generate_qr_code(content, index, foldername):
 
 def process_url(url):
     url_pattern = compile(
-        r"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+        r"^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
     )
     if not url_pattern.match(url):
         print(f"Invalid URL: {url}")

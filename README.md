@@ -4,18 +4,18 @@ LinkSnipper is a Python script designed to simplify the process of generating sh
 
 ## Features
 
-- Converts a list of URLs from a file into shortened URLs using a URL shortener API.
-- Saves the shortened URLs to a file and displays them in the console.
-- Generates QR codes for each shortened URL, stored in a separate folder.
+-   Converts a list of URLs from a file into shortened URLs using a URL shortener API.
+-   Saves the shortened URLs to a file and displays them in the console.
+-   Generates QR codes for each shortened URL, stored in a separate folder.
 
 ## Requirements
 
 Ensure your system meets the following prerequisites:
 
-- Python 3.5 or higher
-- The `requests` library
-- The `qrcode` library
-- The `Pillow` library
+-   Python 3.5 or higher
+-   The `requests` library
+-   The `qrcode` library
+-   The `Pillow` library
 
 ## Installation
 
@@ -59,9 +59,7 @@ To ensure a welcoming and respectful environment, we follow a [Code of Conduct](
 This project is licensed under the terms of the [MIT License](./LICENSE). For more details, refer to the [LICENSE](./LICENSE) file.
 
 ## Sponsors
-[![1Password](imgs/1Password.svg)](https://1password.com/)
 
-[![Tuta](imgs/tuta.svg)](https://tuta.com/)
-
-[![Netlify](imgs/netlify.svg)](https://www.netlify.com/)
-
+[![1Password](https://img.shields.io/badge/1password-white?style=for-the-badge&logo=1password&logoColor=black)](https://1password.com/)
+[![1Password](https://img.shields.io/badge/tuta-white?style=for-the-badge&logo=tutanota&logoColor=black)](https://tuta.com/)
+[![1Password](https://img.shields.io/badge/netlify-white?style=for-the-badge&logo=netlify&logoColor=black)](https://www.netlify.com/)

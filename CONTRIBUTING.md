@@ -14,9 +14,9 @@ We welcome your contributions to LinkSnipper!
 
 Please make sure to follow the following guidelines before you contribute:
 
-* Write clear and concise commit messages.
-* Follow the existing coding style.
-* Test your changes thoroughly.
+-   Write clear and concise commit messages.
+-   Follow the existing coding style.
+-   Test your changes thoroughly.
 
 ## Getting help
 
