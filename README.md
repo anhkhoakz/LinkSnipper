@@ -61,5 +61,5 @@ This project is licensed under the terms of the [GNU GPLv3](<[./LICENSE](https:/
 ## Sponsors
 
 [![1Password](https://img.shields.io/badge/1password-white?style=for-the-badge&logo=1password&logoColor=black)](https://1password.com/)
-[![1Password](https://img.shields.io/badge/tuta-white?style=for-the-badge&logo=tutanota&logoColor=black)](https://tuta.com/)
+[![1Password](https://img.shields.io/badge/tuta-white?style=for-the-badge&logo=tuta&logoColor=black)](https://tuta.com/)
 [![1Password](https://img.shields.io/badge/netlify-white?style=for-the-badge&logo=netlify&logoColor=black)](https://www.netlify.com/)
