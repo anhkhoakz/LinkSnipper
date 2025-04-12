@@ -1,0 +1,9 @@
+[project]
+name = "LinkSnipper"
+version = "0.0.1"
+description = "LinkSnipper is a Python script designed to simplify the process of generating shortened URLs using a URL shortener API and creating QR codes for those URLs. This tool streamlines the task of managing and sharing links, making it ideal for various applications."
+authors = [{ name = "anhkhoakz" }]
+readme = "README.md"
+license = { file = "LICENSE.md" }
+requires-python = ">=3.12"
+dependencies = ["pillow>=11.1.0", "qrcode>=8.1", "requests>=2.32.3"]

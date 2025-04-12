@@ -2,15 +2,18 @@ from qrcode import QRCode
 from requests import get, RequestException
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import as_completed
 from re import compile
 from typing import List, Optional
+from itertools import islice
+import json
 
-URL_SHORTENER_API = "http://is.gd/create.php"
-URL_SHORTENER_FORMAT = "simple"
-MAX_WORKERS = 50
-DEFAULT_INPUT_FILE = "input.txt"
-DEFAULT_OUTPUT_FILE = "shortened_urls.txt"
-DEFAULT_QR_FOLDER = "QR_codes"
+URL_SHORTENER_API: str = "https://is.gd/create.php"
+URL_SHORTENER_FORMAT: str = "simple"
+MAX_WORKERS: int = 50
+DEFAULT_INPUT_FILE: str = "input.txt"
+DEFAULT_OUTPUT_FILE: str = "shortened_urls.txt"
+DEFAULT_QR_FOLDER: str = "QR_codes"
 
 url_cache: dict[str, str] = {}
 
@@ -68,6 +71,18 @@ def write_file(lines: List[str], file_path: str) -> None:
         file.write("\n".join(lines))
 
 
+def write_json(data: List[dict], file_path: str) -> None:
+    """
+    Writes a list of dictionaries to a JSON file.
+
+    Args:
+        data (List[dict]): List of dictionaries to write.
+        file_path (str): Path to the output JSON file.
+    """
+    with open(file_path, "w") as file:
+        json.dump(data, file, indent=4)
+
+
 def generate_qr_code(content: str, index: int, folder_name: str) -> None:
     """
     Generates a QR code for the given content and saves it as an image.
@@ -80,13 +95,15 @@ def generate_qr_code(content: str, index: int, folder_name: str) -> None:
     qr = QRCode(version=1, box_size=10, border=5)
     qr.add_data(content)
     qr.make(fit=True)
-    file_name = f"QR_{index}.png"
-    folder_path = Path(folder_name)
+
+    domain: str = content.split("//")[-1].split("/")[0].replace(".", "_")
+    file_name: str = f"QR_{domain}.png"
+
+    folder_path: Path = Path(folder_name)
     folder_path.mkdir(parents=True, exist_ok=True)
-    file_path = folder_path.joinpath(file_name)
+    file_path: Path = folder_path.joinpath(file_name)
     img = qr.make_image(fill_color="black", back_color="white")
     img.save(file_path)
-    print(f"{file_path} generated successfully!")
 
 
 def validate_url(url: str) -> bool:
@@ -121,7 +138,23 @@ def process_url(url: str) -> Optional[str]:
     return shorten_url(url)
 
 
-def shorten_urls(urls: List[str]) -> List[str]:
+def batch_iterable(iterable: List[str], batch_size: int) -> List[List[str]]:
+    """
+    Splits an iterable into batches of a given size.
+
+    Args:
+        iterable (List[str]): The iterable to split.
+        batch_size (int): The size of each batch.
+
+    Returns:
+        List[List[str]]: Batches of the iterable.
+    """
+    iterator = iter(iterable)
+    while batch := list(islice(iterator, batch_size)):
+        yield batch
+
+
+def shorten_urls(urls: List[str]) -> List[tuple[str, str]]:
     """
     Shortens a list of URLs concurrently.
 
@@ -129,11 +162,19 @@ def shorten_urls(urls: List[str]) -> List[str]:
         urls (List[str]): List of URLs to shorten.
 
     Returns:
-        List[str]: List of shortened URLs.
+        List[tuple[str, str]]: List of tuples containing original and shortened URLs.
     """
+    results: List[tuple[str, str]] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        shortened_urls = list(executor.map(process_url, urls))
-    return [url for url in shortened_urls if url is not None]
+        future_to_url: dict = {
+            executor.submit(process_url, url): url for url in urls
+        }
+        for future in as_completed(future_to_url):
+            original_url: str = future_to_url[future]
+            shortened_url: Optional[str] = future.result()
+            if shortened_url:
+                results.append((original_url, shortened_url))
+    return results
 
 
 def generate_qr_codes(urls: List[str], folder_name: str) -> None:
@@ -145,25 +186,44 @@ def generate_qr_codes(urls: List[str], folder_name: str) -> None:
         folder_name (str): Folder to save the QR code images.
     """
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        for index, url in enumerate(urls):
+        futures = [
             executor.submit(generate_qr_code, url, index + 1, folder_name)
+            for index, url in enumerate(urls)
+        ]
+        for future in as_completed(futures):
+            future.result()
 
 
 def main() -> None:
     """
-    Main function to read URLs, shorten them, write to a file, and generate QR codes.
+    Main function to read URLs, shorten them, write to a JSON file, and generate QR codes.
     """
-    input_file_path = DEFAULT_INPUT_FILE
-    output_file_path = DEFAULT_OUTPUT_FILE
-    qr_folder_name = DEFAULT_QR_FOLDER
+    input_file_path: str = DEFAULT_INPUT_FILE
+    output_file_path: str = "output.json"
+    qr_folder_name: str = DEFAULT_QR_FOLDER
 
-    urls = read_file(input_file_path)
-    shortened_urls = shorten_urls(urls)
-    write_file(shortened_urls, output_file_path)
+    urls: List[str] = read_file(input_file_path)
+    valid_urls: List[tuple[str, str]] = []
+
+    for batch in batch_iterable(urls, MAX_WORKERS):
+        valid_urls.extend(shorten_urls(batch))
+
+    output_data: List[dict[str, str]] = []
+    for index, (original_url, shortened_url) in enumerate(valid_urls):
+        qr_code_path: str = str(
+            Path(qr_folder_name).joinpath(f"QR_{index + 1}.png")
+        )
+        output_data.append({
+            "origin": original_url,
+            "shortened": shortened_url,
+            "qr_code": qr_code_path,
+        })
+
+    write_json(output_data, output_file_path)
     print(f"Shortened URLs written to {output_file_path}")
-    print("Shortened URLs:")
-    print("\n".join(shortened_urls))
-    generate_qr_codes(shortened_urls, qr_folder_name)
+    generate_qr_codes(
+        [shortened for _, shortened in valid_urls], qr_folder_name
+    )
 
 
 if __name__ == "__main__":
