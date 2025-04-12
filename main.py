@@ -171,9 +171,7 @@ def shorten_urls(urls: List[str]) -> List[tuple[str, str]]:
     """
     results: List[tuple[str, str]] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        future_to_url: dict = {
-            executor.submit(process_url, url): url for url in urls
-        }
+        future_to_url: dict = {executor.submit(process_url, url): url for url in urls}
         for future in as_completed(future_to_url):
             original_url: str = future_to_url[future]
             shortened_url: Optional[str] = future.result()
@@ -191,9 +189,7 @@ def generate_qr_codes(urls: List[str], folder_name: str) -> None:
         folder_name (str): Folder to save the QR code images.
     """
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = [
-            executor.submit(generate_qr_code, url, folder_name) for url in urls
-        ]
+        futures = [executor.submit(generate_qr_code, url, folder_name) for url in urls]
         for future in as_completed(futures):
             future.result()
 
@@ -214,20 +210,18 @@ def main() -> None:
 
     output_data: List[dict[str, str]] = []
     for index, (original_url, shortened_url) in enumerate(valid_urls):
-        qr_code_path: str = str(
-            Path(qr_folder_name).joinpath(f"QR_{index + 1}.png")
+        qr_code_path: str = str(Path(qr_folder_name).joinpath(f"QR_{index + 1}.png"))
+        output_data.append(
+            {
+                "origin": original_url,
+                "shortened": shortened_url,
+                "qr_code": qr_code_path,
+            }
         )
-        output_data.append({
-            "origin": original_url,
-            "shortened": shortened_url,
-            "qr_code": qr_code_path,
-        })
 
     write_json(output_data, output_file_path)
     print(f"Shortened URLs written to {output_file_path}")
-    generate_qr_codes(
-        [shortened for _, shortened in valid_urls], qr_folder_name
-    )
+    generate_qr_codes([shortened for _, shortened in valid_urls], qr_folder_name)
 
 
 if __name__ == "__main__":
