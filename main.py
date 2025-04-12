@@ -1,12 +1,16 @@
-from qrcode import QRCode
-from requests import get, RequestException
+"""
+This script provides functionality to shorten URLs, generate QR codes, and save the results in JSON format.
+"""
+
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import as_completed
-from re import compile
-from typing import List, Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from re import compile as re_compile
+from typing import List, Optional, Generator
 from itertools import islice
 import json
+
+from qrcode import QRCode
+from requests import get, RequestException
 
 URL_SHORTENER_API: str = "https://is.gd/create.php"
 URL_SHORTENER_FORMAT: str = "simple"
@@ -55,7 +59,7 @@ def read_file(file_path: str) -> List[str]:
     Returns:
         List[str]: List of lines from the file.
     """
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         return [line.strip() for line in file]
 
 
@@ -67,7 +71,7 @@ def write_file(lines: List[str], file_path: str) -> None:
         lines (List[str]): List of strings to write.
         file_path (str): Path to the output file.
     """
-    with open(file_path, "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         file.write("\n".join(lines))
 
 
@@ -79,17 +83,16 @@ def write_json(data: List[dict], file_path: str) -> None:
         data (List[dict]): List of dictionaries to write.
         file_path (str): Path to the output JSON file.
     """
-    with open(file_path, "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4)
 
 
-def generate_qr_code(content: str, index: int, folder_name: str) -> None:
+def generate_qr_code(content: str, folder_name: str) -> None:
     """
     Generates a QR code for the given content and saves it as an image.
 
     Args:
         content (str): The content to encode in the QR code.
-        index (int): Index for naming the QR code file.
         folder_name (str): Folder to save the QR code image.
     """
     qr = QRCode(version=1, box_size=10, border=5)
@@ -116,7 +119,7 @@ def validate_url(url: str) -> bool:
     Returns:
         bool: True if the URL is valid, False otherwise.
     """
-    url_pattern = compile(
+    url_pattern = re_compile(
         r"^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
     )
     return bool(url_pattern.match(url))
@@ -138,7 +141,9 @@ def process_url(url: str) -> Optional[str]:
     return shorten_url(url)
 
 
-def batch_iterable(iterable: List[str], batch_size: int) -> List[List[str]]:
+def batch_iterable(
+    iterable: List[str], batch_size: int
+) -> Generator[List[str], None, None]:
     """
     Splits an iterable into batches of a given size.
 
@@ -187,8 +192,7 @@ def generate_qr_codes(urls: List[str], folder_name: str) -> None:
     """
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = [
-            executor.submit(generate_qr_code, url, index + 1, folder_name)
-            for index, url in enumerate(urls)
+            executor.submit(generate_qr_code, url, folder_name) for url in urls
         ]
         for future in as_completed(futures):
             future.result()

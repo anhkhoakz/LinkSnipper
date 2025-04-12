@@ -36,7 +36,7 @@ uv sync
 2. Execute the script by running the following command in your terminal or command prompt:
 
 ```sh
-python3 main.py
+.venv/bin/python main.py
 ```
 
 3. The script will process the URLs, generate shortened versions, and save them to a file named `output.json`. The shortened URLs will also be displayed in the console.
