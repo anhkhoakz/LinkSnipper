@@ -1,27 +1,27 @@
-# LinkSnipper: URL Shortener and QR Code Generator
+# 🚀 **LinkSnipper: URL Shortener & QR Code Generator**
 
-LinkSnipper is a Python script designed to simplify the process of generating shortened URLs using a URL shortener API and creating QR codes for those URLs. This tool streamlines the task of managing and sharing links, making it ideal for various applications.
+> *Easily shorten URLs and generate QR codes with a single Python script!*
 
-## Features
+---
 
-- Converts a list of URLs from a file into shortened URLs using a URL shortener API.
-- Saves the shortened URLs to a JSON file and displays them in the console.
-- Generates QR codes for each shortened URL, stored in a separate folder.
+## ✨ Features
 
-## Requirements
+- 🔗 **Batch URL Shortening**: Converts a list of URLs from a file into shortened URLs using a URL shortener API.
+- 💾 **Easy Export**: Saves the shortened URLs to a JSON file and displays them in the console.
+- 🖼️ **QR Code Generation**: Generates QR codes for each shortened URL, stored in a separate folder.
 
-Ensure your system meets the following prerequisites:
+---
+
+## ⚙️ Requirements
 
 - Python 3.12 or higher
-- The `requests` library
-- The `qrcode` library
-- The `Pillow` library
+- `requests` library
+- `qrcode` library
+- `Pillow` library
 
-## Installation
+---
 
-1. Clone this repository or download the script to your local machine.
-
-2. Install the required packages by running the following command in your terminal or command prompt:
+## 📦 Installation
 
 ```sh
 uv env venv
@@ -29,34 +29,44 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 uv sync
 ```
 
-## Usage
+---
+
+## 🚦 Usage
 
 1. Create a file named `input.txt` and list the URLs you wish to shorten, each on a new line.
+2. Run the script:
 
-2. Execute the script by running the following command in your terminal or command prompt:
+   ```sh
+   .venv/bin/python main.py
+   ```
 
-```sh
-.venv/bin/python main.py
-```
-
-3. The script will process the URLs, generate shortened versions, and save them to a file named `output.json`. The shortened URLs will also be displayed in the console.
-
+3. The script will process the URLs, generate shortened versions, and save them to `output.json`. The shortened URLs will also be displayed in the console.
 4. QR codes for each shortened URL will be generated and stored in a folder named `QR_codes`.
 
-## Contributing
+---
 
-We welcome your contributions! If you encounter issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/anhkhoakz/linksnipper). Please follow the [Contributing Guidelines](./CONTRIBUTING.md).
+## 🤝 Contributing
 
-## Code of Conduct
+We welcome your contributions! If you encounter issues or have suggestions for improvements, please open an issue or submit a pull request on our [GitHub repository](https://github.com/anhkhoakz/linksnipper). Please follow the [Contributing Guidelines](./CONTRIBUTING.md).
+
+---
+
+## 🧑‍💻 Code of Conduct
 
 To ensure a welcoming and respectful environment, we follow a [Code of Conduct](./CODE_OF_CONDUCT.md) for all interactions within the LinkSnipper community.
 
-## License
+---
 
-This project is licensed under the terms of the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/). For more details, refer to the [LICENSE](./LICENSE.md) file.
+## 📄 License
 
-## Sponsors
+Licensed under the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/). See the [LICENSE](./LICENSE.md) file for details.
 
-[![1Password](https://img.shields.io/badge/1password-white?style=for-the-badge&logo=1password&logoColor=black)](https://1password.com/)
-[![Tuta](https://img.shields.io/badge/tuta-white?style=for-the-badge&logo=tuta&logoColor=black)]()
-[![Netlify](https://img.shields.io/badge/netlify-white?style=for-the-badge&logo=netlify&logoColor=black)](https://www.netlify.com/)
+---
+
+## 💖 Sponsors
+
+<p align="left">
+  <a href="https://1password.com/"><img src="https://img.shields.io/badge/1password-white?style=for-the-badge&logo=1password&logoColor=3B66BC" alt="1Password"></a>
+  <a href="#"><img src="https://img.shields.io/badge/tuta-white?style=for-the-badge&logo=tuta&logoColor=850122" alt="Tuta"></a>
+  <a href="https://www.netlify.com/"><img src="https://img.shields.io/badge/netlify-white?style=for-the-badge&logo=netlify&logoColor=00C7B7" alt="Netlify"></a>
+</p>
